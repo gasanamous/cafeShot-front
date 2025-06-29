@@ -56,23 +56,13 @@ export default function LoginCard() {
       <label className="ml-5 w-full text-left mb-1">Password</label>
       <input
         className="border-2 rounded-xl border-[#704123] w-full p-2 mb-5 bg-primary"
+        type="password"
         placeholder="Enter your Password"
         value={newAdmin.accountPassword}
         onChange={(event) => {
           setNewAdmin({ ...newAdmin, accountPassword: event.target.value });
         }}
       />
-
-      <div className="flex flex-row justify-between items-center w-full ml-5">
-        <div className="flex justify-center items-center gap-1">
-          <input type="checkbox" className="" />
-          <span className="text-sm ">Remember me</span>
-        </div>
-        <Link>
-          <h1 className="text-sm">Forget Password ?</h1>
-        </Link>
-      </div>
-
       <button
         type="submit"
         className="w-1/2 p-2 mt-5 mb-5 box-shadow rounded-[15px] cursor-pointer login"
