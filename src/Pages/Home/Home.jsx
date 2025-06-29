@@ -49,7 +49,6 @@ function Home() {
 
     /** if pathname contains tableId then automatic book a table */
     const bookTable = async (tableId) => {
-      const tableId = useParams().tableId
       const endpoint = `/table/booktable`
       const body = { tableId }
       APIService.post(endpoint, url, body)
