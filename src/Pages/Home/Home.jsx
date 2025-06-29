@@ -18,11 +18,11 @@ import OrderNow from "../../Components/OrderNowButton/OrderNow";
 import APIService from "../../utils/api";
 import { useCustomer } from "../../Contexts/CustomerContext";
 import QRDialog from "../../Components/QR_code/QRDialog";
-import { useLocation, useParams } from "react-router-dom";
-import { use } from "react";
+import { useLocation } from "react-router-dom";
+import { useCustomer } from "../../Contexts/CustomerContext";
 
 function Home() {
-  const { customerToken } = useCustomer();
+  const { setRole } = useCustomer();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("lg"));
   const [openOptionDialog, setOpenOptionDialog] = useState(false);
@@ -48,10 +48,20 @@ function Home() {
   useEffect(() => {
     /** if pathname contains tableId then automatic book a table */
     const bookTable = async (tableId) => {
-      const endpoint = `/table/booktable`
-      const body = { tableId }
-      APIService.post(endpoint, body)
+    try {
+      const response = await APIService.post("/table/booktable", { tableId });
+      const token = response.data?.TABLE_ACCESS_TOKEN;
+      localStorage.setItem("role", "customer");
+      localStorage.setItem("TABLE_ACCESS_TOKEN", token);
+      localStorage.setItem("tableId", tableId);
+      localStorage.setItem("orderItems", "[]");
+      setRole("customer");
+      
+    } catch (error) {
+      console.log(error.response.data?.errMsg);
     }
+  };
+
     const queryParams = new URLSearchParams(window.location.search)
     const tableId = queryParams.get('tableId')
     if (tableId) {
