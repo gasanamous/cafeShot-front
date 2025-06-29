@@ -111,7 +111,7 @@ export default function CurrentOrder() {
               {orderStatus}
               <img
                 className={`w-[20px] h-[20px] ${
-                  orderStatus === "pending" ? "animate-spin" : " "
+                  orderStatus === "Pending" ? "animate-spin" : " "
                 }`}
                 src={`${
                   import.meta.env.VITE_API
