@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client'
 
-const token = localStorage.getItem('adminToken')
+const token = localStorage.getItem('Token')
 
 console.log('API:', import.meta.env.VITE_API)
 console.log('SOCKET:', import.meta.env.VITE_API_SOCKET)
