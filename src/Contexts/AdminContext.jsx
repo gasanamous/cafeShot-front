@@ -4,7 +4,7 @@ const AdminContext = createContext();
 
 export const AdminProvider = ({ children }) => {
   const [role, setRole] = useState(localStorage.getItem("role"));
-  const [adminToken, setAdminToken] = useState(localStorage.getItem("Token"));
+  const [adminToken, setAdminToken] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (role?.toLowerCase() === "admin") {
