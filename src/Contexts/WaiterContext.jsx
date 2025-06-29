@@ -4,7 +4,7 @@ const WaiterContext = createContext();
 
 export const WaiterProvider = ({ children }) => {
   const [role, setRole] = useState(localStorage.getItem("role"));
-  const [waiterToken, setWaiterToken] = useState(localStorage.getItem("Token"));
+  const [waiterToken, setWaiterToken] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (role?.toLowerCase() === "waiter") {
