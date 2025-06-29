@@ -1,4 +1,4 @@
-import CoffeeCup from "../../assets/CoffeeCup.png";
+import CoffeeCup from "../../assets/coffeeCup.png";
 export default function HoursOfOperation() {
   return (
     <div className="flex flex-row justify-center items-center">
