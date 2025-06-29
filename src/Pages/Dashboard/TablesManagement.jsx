@@ -1,0 +1,77 @@
+import React, { useEffect, useState } from "react";
+import { IoAddCircleOutline } from "react-icons/io5";
+import AdminAddForm from "../../Components/AdminAddForm/AdminAddForm";
+import ViewTable from "../../Components/ViewTable/ViewTable";
+import APIService from "../../utils/api";
+
+function TablesManagement() {
+  const [tables, setTables] = useState([]);
+  const headerToView = [
+    { name: "_id", type: "text" },
+    { name: "floor", type: "text" },
+    { name: "status", type: "text" },
+  ];
+  const headerToEdit = [
+    { name: "tableId", type: "text" },
+    { name: "floor", type: "text" },
+  ];
+  const [openForm, setOpenForm] = useState(false);
+  const handleOpenAction = () => {
+    setOpenForm(true);
+  };
+  const handleCloseAction = () => {
+    setOpenForm(false);
+  };
+  const getTables = async () => {
+    try {
+      const data = await APIService.get(`/table/tablesDetails`, true, "admin");
+      setTables(
+        data.tablesWithOrders.sort((a, b) => {
+          const numA = parseInt(a._id.split("_")[1]);
+          const numB = parseInt(b._id.split("_")[1]);
+          return numA - numB;
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTables();
+      const update = () => {
+        getTables();
+      };
+  
+      window.addEventListener("update", update);
+  
+      return () => {
+        window.removeEventListener("update", update);
+      };
+    }, [openForm]);
+  return (
+    <div className="flex flex-col gap-3">
+      <button
+        onClick={handleOpenAction}
+        className="flex txt3 border rounded-2xl p-2 justify-center items-center bg-primary gap-2 w-fit ml-auto"
+      >
+        Add New
+        <IoAddCircleOutline className="w-[30px] h-[30px] cursor-pointer" />
+      </button>
+      <AdminAddForm
+        open={openForm}
+        onClose={handleCloseAction}
+        header={headerToEdit}
+        item="table"
+      />
+      <ViewTable
+        headerToView={headerToView}
+        headerToEdit={headerToEdit}
+        array={tables}
+        item="table"
+      />
+    </div>
+  );
+}
+
+export default TablesManagement;

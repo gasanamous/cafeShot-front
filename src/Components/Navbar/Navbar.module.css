@@ -1,0 +1,37 @@
+nav {
+  position: sticky;
+  top: 0;
+}
+nav ul li a {
+  color: var(--color4);
+  font-size: large;
+}
+
+.mobileNavbar {
+  position: absolute;
+  z-index: 30;
+  top: 3rem;
+  right: 4px;
+  border-radius: 0px 0px 20px 20px;
+  width: max-content;
+  border: 2px solid var(--color1);
+  box-shadow: 2px 3px 3px var(--color3);
+  background-color: var(--color1);
+}
+.mobileNavbar li {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  width: 100%;
+  border-top: 2px solid var(--color1);
+}
+.mobileNavbar li:first-child {
+  border-top: 0px;
+}
+nav .mobileNavbar li a {
+  padding: 5px 10px;
+  color: var(--color4);
+}
+nav .mobileNavbar li:last-child {
+  border-radius: 0px 0px 18px 18px;
+}

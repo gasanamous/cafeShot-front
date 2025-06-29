@@ -1,0 +1,35 @@
+.categorylist {
+  box-shadow: 1px 2px 5px var(--color1);
+  border-radius: 5px;
+}
+.card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+.card:hover,
+.card:focus {
+  transform: scale(1.02);
+}
+
+.card .addToOrder {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: -100%;
+  width: fit-content;
+  padding: 0px 12px;
+  background-color: #f4eae2dd;
+  font-weight: bold;
+  text-align: center;
+  transform: translateX(0%);
+  transition: right 0.4s cubic-bezier(0.6, 0.4, 0, 1);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.card:hover .addToOrder,
+.card:focus .addToOrder {
+  right: 0;
+  pointer-events: auto;
+}

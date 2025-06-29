@@ -1,0 +1,8 @@
+.facebook:hover,
+.instagram:hover {
+  background-color: var(--color3);
+}
+.contact:hover {
+  cursor: pointer;
+  color: var(--color4);
+}

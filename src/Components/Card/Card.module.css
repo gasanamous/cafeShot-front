@@ -1,0 +1,33 @@
+.card img {
+  height: 50%;
+  width: 100%;
+}
+.card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease-in;
+}
+
+.card:hover,
+.card:focus {
+  transform: scale(1.02);
+}
+.card .addToOrder {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  padding: 12px 0;
+  background: var(--color3);
+  text-align: center;
+  font-weight: bold;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.6, 0.4, 0, 1);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.card:hover .addToOrder {
+  transform: translateY(0%);
+  pointer-events: auto;
+}

@@ -1,0 +1,158 @@
+@import url("https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&family=Croissant+One&family=Dosis:wght@200..800&family=Gidole&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kalam:wght@300;400;700&family=Kurale&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poetsen+One&family=Roboto:ital,wght@0,100..900;1,100..900&family=Tagesschrift&display=swap");
+@import "tailwindcss";
+@font-face {
+  font-family: "MyCustomFont";
+  src: url("/Fonts/FRAMDCN.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "fontLogo";
+  src: url("/Fonts/BAUHS93.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+.fontLogo {
+  font-family: "Kurale", serif;
+  font-weight: 800;
+}
+body {
+  font-family: "Kurale", serif;
+  background-color: #fffffc;
+  background-image: repeating-linear-gradient(
+      70deg,
+      rgba(0, 0, 0, 0.01) 0px,
+      rgba(0, 0, 0, 0.01) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    repeating-linear-gradient(
+      40deg,
+      rgba(0, 0, 0, 0.01) 0px,
+      rgba(0, 0, 0, 0.01) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+}
+nav ul {
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+}
+.active {
+  font-weight: 700;
+  text-decoration: underline;
+}
+button{
+  cursor: pointer;
+}
+:root {
+  --color1: #f4eae2;
+  --color2: #f0e5cf;
+  --color3: #704123;
+  --color4: #30261e;
+}
+.logo {
+  width: 30px;
+}
+.container {
+  width: 90%;
+  justify-self: center;
+}
+.bg-primary {
+  background-color: #f4eae2;
+}
+.bg-primary-trans {
+  background-color: #f4eae28e;
+}
+.bg-secondary {
+  background-color: #704123;
+}
+.bg-secondary-trans {
+  background-color: rgba(48, 38, 30, 0.565);
+}
+.txt1 {
+  color: var(--color1);
+}
+.txt2 {
+  color: var(--color2);
+}
+.txt3 {
+  color: var(--color3);
+}
+.txt4 {
+  color: var(--color4);
+}
+.txt-shadow {
+  text-shadow: 2px 2px 2px var(--color4);
+}
+.box-shadow {
+  box-shadow: 0px 2px 5px var(--color1);
+}
+
+.scrollable-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollable-box::-webkit-scrollbar-track {
+  background: #f8f4e1;
+  border-radius: 10px;
+}
+
+.scrollable-box::-webkit-scrollbar-thumb {
+  background: #74512d;
+  border-radius: 10px;
+}
+
+.scrollable-box::-webkit-scrollbar-thumb:hover {
+  background: #af8f6f;
+}
+thead th {
+  padding: 20px 10px;
+}
+tbody tr td {
+  padding: 10px 0px;
+}
+.swiper-button-prev,
+.swiper-button-next {
+  color: #af8f6f !important;
+}
+.swiper-pagination-bullets {
+  z-index: 50 !important;
+  position: relative;
+}
+.swiper-pagination-bullet {
+  background-color: var(--color3) !important;
+  opacity: 0.6;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--color4) !important;
+  opacity: 1;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--color1);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--color3);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color4);
+}
+
+.animate-spin{
+  animation-duration: 5s;
+}

@@ -1,0 +1,12 @@
+.links a,
+.links button {
+  padding: 10px 20px;
+  border-radius: 10px 20px;
+  background-color: var(--color3);
+  transition: 400ms;
+  cursor: pointer;
+}
+.links a:hover,
+.links button:hover {
+  transform: scale(1.1);
+}
