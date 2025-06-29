@@ -15,13 +15,16 @@ export default function LoginCard() {
     loginId: "",
     accountPassword: "",
   });
+  const [loading, setLoading] = useState(false)
   const handleToSubmit = async () => {
+    setLoading(true)
     const response = await APIService.post("/manager/login", newAdmin);
     const token = response.data.ACCESS_TOKEN;
     const role = response.data.role.toLowerCase();
     console.log(response);
     localStorage.setItem("Token", token);
     localStorage.setItem("role", role);
+    setLoading(false)
 
     if (role === "admin") {
       setAdminRole(role);
@@ -64,6 +67,7 @@ export default function LoginCard() {
         }}
       />
       <button
+        disabled={loading}
         type="submit"
         className="w-1/2 p-2 mt-5 mb-5 box-shadow rounded-[15px] cursor-pointer login"
         onClick={handleToSubmit}
