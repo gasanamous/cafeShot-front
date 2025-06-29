@@ -18,6 +18,8 @@ import OrderNow from "../../Components/OrderNowButton/OrderNow";
 import APIService from "../../utils/api";
 import { useCustomer } from "../../Contexts/CustomerContext";
 import QRDialog from "../../Components/QR_code/QRDialog";
+import { useLocation, useParams } from "react-router-dom";
+import { use } from "react";
 
 function Home() {
   const { customerToken } = useCustomer();
@@ -41,13 +43,26 @@ function Home() {
     }
   };
 
+  const location = useLocation();
+  
   useEffect(() => {
+
+    /** if pathname contains tableId then automatic book a table */
+    const bookTable = async (tableId) => {
+      const tableId = useParams().tableId
+      const endpoint = `/table/booktable`
+      const body = { tableId }
+      APIService.post(endpoint, url, body)
+    }
+    if (location.pathname.includes("tableId")) {
+      bookTable(useParams().tableId);
+    }
     const getDrinks = async () => {
       const data = await APIService.get(`/menu?series=Drink`);
       setFavouriteDrinks(data.menu);
     };
     getDrinks();
-  }, []);
+  }, [location.pathname]);
 
   return (
     <>
