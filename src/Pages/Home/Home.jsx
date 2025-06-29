@@ -21,7 +21,7 @@ import QRDialog from "../../Components/QR_code/QRDialog";
 import { useLocation } from "react-router-dom";
 
 function Home() {
-  const { setRole } = useCustomer();
+  const { setRole, customerToken } = useCustomer();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("lg"));
   const [openOptionDialog, setOpenOptionDialog] = useState(false);
