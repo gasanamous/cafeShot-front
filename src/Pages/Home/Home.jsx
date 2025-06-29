@@ -44,17 +44,18 @@ function Home() {
   };
 
   const location = useLocation();
-  
-  useEffect(() => {
 
+  useEffect(() => {
     /** if pathname contains tableId then automatic book a table */
     const bookTable = async (tableId) => {
       const endpoint = `/table/booktable`
       const body = { tableId }
-      APIService.post(endpoint, url, body)
+      APIService.post(endpoint, body)
     }
-    if (location.pathname.includes("tableId")) {
-      bookTable(useParams().tableId);
+    const queryParams = new URLSearchParams(window.location.search)
+    const tableId = queryParams.get('tableId')
+    if (tableId) {
+      bookTable(tableId);
     }
     const getDrinks = async () => {
       const data = await APIService.get(`/menu?series=Drink`);
