@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 
 function Root() {
 
-  location = useLocation()
+  const location = useLocation()
   useEffect(() => {
 
     if (socket) {
