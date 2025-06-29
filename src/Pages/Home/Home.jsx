@@ -19,7 +19,6 @@ import APIService from "../../utils/api";
 import { useCustomer } from "../../Contexts/CustomerContext";
 import QRDialog from "../../Components/QR_code/QRDialog";
 import { useLocation } from "react-router-dom";
-import { useCustomer } from "../../Contexts/CustomerContext";
 
 function Home() {
   const { setRole } = useCustomer();
