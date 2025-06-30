@@ -3,6 +3,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import AdminAddForm from "../../Components/AdminAddForm/AdminAddForm";
 import ViewTable from "../../Components/ViewTable/ViewTable";
 import APIService from "../../utils/api";
+import Loader from "../../Components/Loader/Loader";
 
 function TablesManagement() {
   const [tables, setTables] = useState([]);
@@ -13,9 +14,11 @@ function TablesManagement() {
   ];
   const headerToEdit = [
     { name: "tableId", type: "text" },
-    { name: "floor", type: "text" },
+    { name: "floor", type: "select",options: ["0","1", "2", "3"], },
   ];
   const [openForm, setOpenForm] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const handleOpenAction = () => {
     setOpenForm(true);
   };
@@ -23,6 +26,7 @@ function TablesManagement() {
     setOpenForm(false);
   };
   const getTables = async () => {
+    setLoading(true);
     try {
       const data = await APIService.get(`/table/tablesDetails`, true, "admin");
       setTables(
@@ -34,21 +38,23 @@ function TablesManagement() {
       );
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     getTables();
-      const update = () => {
-        getTables();
-      };
-  
-      window.addEventListener("update", update);
-  
-      return () => {
-        window.removeEventListener("update", update);
-      };
-    }, [openForm]);
+    const update = () => {
+      getTables();
+    };
+
+    window.addEventListener("update", update);
+
+    return () => {
+      window.removeEventListener("update", update);
+    };
+  }, [openForm]);
   return (
     <div className="flex flex-col gap-3">
       <button
@@ -64,12 +70,16 @@ function TablesManagement() {
         header={headerToEdit}
         item="table"
       />
-      <ViewTable
-        headerToView={headerToView}
-        headerToEdit={headerToEdit}
-        array={tables}
-        item="table"
-      />
+      {loading ? (
+        <Loader />
+      ) : (
+        <ViewTable
+          headerToView={headerToView}
+          headerToEdit={headerToEdit}
+          array={tables}
+          item="table"
+        />
+      )}
     </div>
   );
 }

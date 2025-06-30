@@ -17,7 +17,6 @@ function TableDialog({ open, setOpen, table }) {
   const { _id, floor, orders, status } = table;
   const [localOrders, setLocalOrders] = useState(orders);
   let sum = 0;
-  console.log(table);
   const handleClose = () => {
     setOpen(false);
   };
@@ -32,19 +31,7 @@ function TableDialog({ open, setOpen, table }) {
     handleClose();
     window.dispatchEvent(new Event("tablessUpdated"));
   };
-  const bookTable = async () => {
-    //not working from the waiter view yet
-    const id = _id;
-    // const response = await APIService.patch(
-    //   `/table/booktable`,
-    //   {
-    //     tableId: id,
-    //   },
-    //   true,
-    //   "waiter"
-    // );
-    handleClose();
-  };
+  
 
   const totalPrice = useMemo(() => {
     return orders?.reduce((sum, order) => sum + order.totalPrice, 0);
@@ -78,8 +65,8 @@ function TableDialog({ open, setOpen, table }) {
       <DialogContent>
         <div className=" gap-2">
           <span className="w-full text-left py-2 txt4">
-            {localOrders?.length > 0 ? (
-              localOrders.map((order, index) => (
+            {localOrders?.length > 0 || table.status ==="Booked" ? (
+              localOrders?.map((order, index) => (
                 <div key={index} className="mt-4 border-t pt-2">
                   <p className="text-sm txt3 mb-1 flex justify-between items-center">
                     <span className="txt3">
@@ -129,7 +116,12 @@ function TableDialog({ open, setOpen, table }) {
                 </div>
               ))
             ) : (
-              <></>
+              <img
+                className={`w-[200px] h-[200px] mx-auto`}
+                src={`${import.meta.env.VITE_API}/utils/tables/${
+                  table._id
+                }.png`}
+              />
             )}
           </span>
         </div>
@@ -148,7 +140,7 @@ function TableDialog({ open, setOpen, table }) {
         >
           Cancel
         </Button>
-        {status === "Booked" ? (
+        {status === "Booked" && (
           <Button
             type="submit"
             onClick={cleanTable}
@@ -161,20 +153,6 @@ function TableDialog({ open, setOpen, table }) {
             }}
           >
             clean Table
-          </Button>
-        ) : (
-          <Button
-            type="submit"
-            onClick={bookTable}
-            sx={{
-              transition: "all 0.3s ease",
-              "&:hover": {
-                backgroundColor: "var(--color3)",
-                color: "var(--color1)",
-              },
-            }}
-          >
-            Book Table
           </Button>
         )}
       </DialogActions>

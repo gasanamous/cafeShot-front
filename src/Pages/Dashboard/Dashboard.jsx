@@ -61,7 +61,7 @@ function Dashboard() {
       <aside
         ref={sidebarRef}
         className={`lg:sticky fixed top-0 left-0 z-30 w-64 h-full transition-transform duration-300 ease-in-out bg-primary-trans ${
-          open ? "mt-12 translate-x-0" : "-translate-x-full"
+          open ? "mt-20 translate-x-0" : " -translate-x-full"
         } sm:relative sm:translate-x-0 sm:z-0`}
         aria-label="Sidebar"
       >
@@ -93,7 +93,7 @@ function Dashboard() {
             <h2 className="break-words">Dashboard / {page}</h2>
           </div>
 
-          <div className="rounded-lg mt-4 w-full max-w-full overflow-hidden">
+          <div className="rounded-lg mt-4 w-full max-w-full overflow-auto">
             {page === "General Info" ? (
               <GeneralInfo />
             ) : page === "Staff Management" ? (

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 import { toast, Bounce } from "react-toastify";
 
 export default class APIService {
@@ -60,6 +61,7 @@ export default class APIService {
 
         } catch (refreshError) {
           localStorage.clear();
+          Navigate("/login");
           toast.error("Session expired. Please login again.");
         }
       }

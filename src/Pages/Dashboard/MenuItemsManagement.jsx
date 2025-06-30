@@ -3,6 +3,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import ViewTable from "../../Components/ViewTable/ViewTable";
 import AdminAddForm from "../../Components/AdminAddForm/AdminAddForm";
 import APIService from "../../utils/api";
+import Loader from "../../Components/Loader/Loader";
 
 function MenuItemsManagement() {
   const headerToEdit = [
@@ -42,12 +43,17 @@ function MenuItemsManagement() {
   ];
   const [openForm, setOpenForm] = useState(false);
   const [menuItems, setMenuItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const getMenuItems = async () => {
+    setLoading(true);
     try {
       const data = await APIService.get(`/menu`);
       setMenuItems(data?.menu);
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -83,12 +89,16 @@ function MenuItemsManagement() {
         header={headerToEdit}
         item="menu"
       />
-      <ViewTable
-        headerToView={headerToView}
-        headerToEdit={headerToEdit}
-        array={menuItems}
-        item="menu"
-      />
+      {loading ? (
+        <Loader />
+      ) : (
+        <ViewTable
+          headerToView={headerToView}
+          headerToEdit={headerToEdit}
+          array={menuItems}
+          item="menu"
+        />
+      )}
     </div>
   );
 }

@@ -6,15 +6,17 @@ import { useTheme } from "@emotion/react";
 import { useMediaQuery } from "@mui/material";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import APIService from "../../utils/api";
+import Loader from "../../Components/Loader/Loader";
 
 function Menu() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [showDropdown, setShowDropdown] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { category } = useParams();
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (!category) {
       navigate("/Menu/All", { replace: true });
@@ -24,11 +26,14 @@ function Menu() {
   const [menuItems, setMenuItems] = useState([]);
 
   const getMenuItems = async () => {
+    setLoading(true);
     try {
       const data = await APIService.get(`/menu`);
-      setMenuItems(data.menu);
+      setMenuItems(data?.menu);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -88,7 +93,10 @@ function Menu() {
         )}
       </div>
 
-      {category === "All" ? (
+      {loading ? (
+        <Loader />
+      ) : category === "All" ? (
+        groupedMenu &&
         Object.entries(groupedMenu).map(([category, items]) => (
           <div key={`${category}`} className="w-full mb-8">
             <h2 className="txt4 text-2xl mb-4 capitalize">{category}</h2>
@@ -103,6 +111,8 @@ function Menu() {
             </ul>
           </div>
         ))
+      ) : loading ? (
+        <Loader />
       ) : subCategory?.length > 0 ? (
         <ul className="w-full grid lg:grid-cols-3 md:grid-cols-2  grid-cols-1 lg:gap-y-5 gap-3">
           {subCategory.map((menuItem) => (

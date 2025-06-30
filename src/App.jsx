@@ -16,6 +16,7 @@ import { WaiterProvider } from "./Contexts/WaiterContext";
 import CustomerRoute from "./Routes/CustomerRoute";
 import WaiterRoute from "./Routes/WaiterRoute";
 import AdminRoute from "./Routes/AdminRoute";
+import { SiteSettingsProvider } from "./Contexts/SiteSettingsContext";
 
 function App() {
   const router = createBrowserRouter([
@@ -74,7 +75,7 @@ function App() {
   ]);
 
   return (
-    <>
+    <SiteSettingsProvider>
       <ToastContainer position="bottom-right" />
       <AdminProvider>
         <CustomerProvider>
@@ -83,7 +84,7 @@ function App() {
           </WaiterProvider>
         </CustomerProvider>
       </AdminProvider>
-    </>
+    </SiteSettingsProvider>
   );
 }
 

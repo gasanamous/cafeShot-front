@@ -3,6 +3,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import AdminAddForm from "../../Components/AdminAddForm/AdminAddForm";
 import ViewTable from "../../Components/ViewTable/ViewTable";
 import APIService from "../../utils/api";
+import Loader from "../../Components/Loader/Loader";
 
 function StaffManagement() {
   const headerToEdit = [
@@ -31,12 +32,17 @@ function StaffManagement() {
   ];
   const [openForm, setOpenForm] = useState(false);
   const [managers, setManagers] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const getManagers = async () => {
+    setLoading(true);
     try {
       const data = await APIService.get(`/manager/allmanagers`, true, "admin");
       setManagers(data?.managers);
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -74,12 +80,16 @@ function StaffManagement() {
         header={headerToEdit}
         item="manager"
       />
-      <ViewTable
-        headerToView={headerToView}
-        headerToEdit={headerToEdit}
-        array={managers}
-        item="manager"
-      />
+      {loading ? (
+        <Loader />
+      ) : (
+        <ViewTable
+          headerToView={headerToView}
+          headerToEdit={headerToEdit}
+          array={managers}
+          item="manager"
+        />
+      )}
     </div>
   );
 }

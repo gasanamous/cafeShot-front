@@ -3,8 +3,10 @@ import React from "react";
 import { DiCoffeescript } from "react-icons/di";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useSiteSettings } from "../../Contexts/SiteSettingsContext";
 
 function About() {
+  const { siteSettings } = useSiteSettings();
   const fadeInUp = {
     offscreen: { opacity: 0, y: 40 },
     onscreen: {
@@ -107,16 +109,7 @@ function About() {
         viewport={{ amount: 0.5 }}
       >
         <p className="text-xl flex flex-col gap-4">
-          In the heart of the city, where footsteps echo and stories unfold with
-          every passing hour, we built more than just a café — we built a
-          sanctuary. Amidst the swirl of urban chaos, our space offers a pause,
-          a breath, a sip of something warm and genuine. Here, coffee is not
-          just a drink — it is a ritual. We source our beans from sustainable
-          farms, roast them with precision, and serve them with a smile that
-          says: "You're home now." Designed with warmth and intention, our café
-          is a blend of rustic wood, soft lighting, and cozy corners. It’s a
-          place where time slows down, conversations deepen, and inspiration
-          flows as freely as the espresso.
+          {siteSettings.aboutUs}
           <NavLink
             to="/LocationContact"
             className="lg:text-xl rounded-bl-3xl rounded-tr-3xl rounded-xl bg-secondary txt1 w-fit p-3 text-center"
@@ -133,7 +126,6 @@ function About() {
                   srcSet={`${item.img}?w=400&fit=crop&auto=format&dpr=2 2x`}
                   src={`${item.img}?w=400&fit=crop&auto=format`}
                   alt={item.title}
-                  
                 />
               </ImageListItem>
             ))}
@@ -155,12 +147,7 @@ function About() {
 
         <div className="relative z-10 px-8 text-center max-w-3xl">
           <p className="text-white text-2xl md:text-3xl lg:text-4xl font-semibold leading-relaxed tracking-wide drop-shadow-lg">
-            {" "}
-            Whether you’re chasing a deadline, catching up with an old friend,
-            or simply sitting in silence,{" "}
-            <strong className="text-secondary font-bold">
-              Our café is your companion in the rhythm of life.
-            </strong>
+            {siteSettings.locationNote}
           </p>
         </div>
       </motion.div>
@@ -194,9 +181,7 @@ function About() {
           viewport={{ once: true, amount: 0.8 }}
           className="lg:text-2xl md:text-xl flex flex-col gap-4 justify-center lg:w-[70%] md:w-[60%] w-[50%] text-center"
         >
-          We select coffee beans from sustainable farms around the world and
-          roast them expertly in our own roastery, so they arrive fresh and
-          aromatic.
+          {siteSettings.sourcingText}
         </motion.p>
       </motion.div>
       <motion.div
@@ -215,7 +200,6 @@ function About() {
                   srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
                   src={`${item.img}?w=248&fit=crop&auto=format`}
                   alt={item.title}
-                  
                 />
               </ImageListItem>
             ))}
@@ -224,9 +208,7 @@ function About() {
         <Box className="flex flex-col gap-10 mt-4 items-center">
           <h2 className="txt4 text-4xl font-extrabold">Our Menu</h2>
           <p className="text-xl text-center w-[80%]">
-            From strong espressos to warming lattes, we offer a selection of hot
-            and cold beverages, as well as freshly baked goods to make your day.
-            Explore our menu and taste the difference.
+            {siteSettings.menuIntro}
           </p>
           <NavLink
             to="/Menu/All"

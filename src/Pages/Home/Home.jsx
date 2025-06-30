@@ -28,7 +28,7 @@ function Home() {
   const [open, setOpen] = useState(false);
   const [openQRDialog, setOpenQRDialog] = useState(false);
   const [favouriteDrinks, setFavouriteDrinks] = useState([]);
-
+const token = localStorage.getItem("Token");
   const handleClickOpen = () => {
     setOpenOptionDialog(true);
   };
@@ -75,7 +75,7 @@ function Home() {
   return (
     <>
       <div className={`relative  bg-primary pb-6`}>
-        {!customerToken ? (
+        {!customerToken && !token ? (
           <div className="fixed right-0 -translate-y-1/2 z-50 flex flex-col gap-4 top-3/4">
             <OrderNow handleClickOpen={handleClickOpen} />
           </div>
@@ -144,7 +144,7 @@ function Home() {
                 <div
                   className={`${style.links} z-10 lg:text-xl txt1 flex lg:gap-6 gap-3`}
                 >
-                  {!customerToken && (
+                  {!customerToken && !token && (
                     <button onClick={handleClickOpen}>Order Now</button>
                   )}
                   <NavLink to="/Menu/All">Explore Our Menu</NavLink>
@@ -172,7 +172,7 @@ function Home() {
                 <div
                   className={`${style.links} z-10 lg:text-xl txt1 flex lg:gap-6 gap-3`}
                 >
-                  {!customerToken && (
+                  {!customerToken && !token && (
                     <button onClick={handleClickOpen}>Order Now</button>
                   )}
                   <NavLink to="/Menu/All">Explore Our Menu</NavLink>

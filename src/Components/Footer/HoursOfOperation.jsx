@@ -1,5 +1,8 @@
 import CoffeeCup from "../../assets/coffeeCup.png";
+import { formatTime12Hour, useSiteSettings } from "../../Contexts/SiteSettingsContext";
+
 export default function HoursOfOperation() {
+  const { siteSettings } = useSiteSettings();
   return (
     <div className="flex flex-row justify-center items-center">
       <div className="flex flex-col justify-center items-center">
@@ -9,8 +12,8 @@ export default function HoursOfOperation() {
       <h3 className="txt4 font-bold">
         <span className="text-4xl">Every Day</span>
         <span className="text-sm">
-          <br /> From 12:00 PM
-          <br /> To 12:00 AM
+          <br /> From {formatTime12Hour(siteSettings.openAt)}
+          <br /> To {formatTime12Hour(siteSettings.closedAt)}
         </span>
       </h3>
     </div>

@@ -6,8 +6,24 @@ import "../../App.css";
 import APIService from "../../utils/api";
 import { useAdmin } from "../../Contexts/AdminContext";
 import { useWaiter } from "../../Contexts/WaiterContext";
+import { FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export default function LoginCard() {
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleMouseUpPassword = (event) => {
+    event.preventDefault();
+  };
+
   const navigate = useNavigate();
   const { setAdminToken, setRole: setAdminRole } = useAdmin();
   const { setWaiterToken, setRole: setWaiterRole } = useWaiter();
@@ -15,27 +31,31 @@ export default function LoginCard() {
     loginId: "",
     accountPassword: "",
   });
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const handleToSubmit = async () => {
-    setLoading(true)
-    const response = await APIService.post("/manager/login", newAdmin);
-    const token = response.data.ACCESS_TOKEN;
-    const role = response.data.role.toLowerCase();
-    console.log(response);
-    localStorage.setItem("Token", token);
-    localStorage.setItem("role", role);
-    setLoading(false)
-
-    if (role === "admin") {
-      setAdminRole(role);
-      setAdminToken(token);
-      navigate("/DashBoard");
-    } else if (role === "waiter") {
-      setWaiterRole(role);
-      setWaiterToken(token);
-      navigate("/CafeTables");
-    } else {
-      navigate("/login");
+    setLoading(true);
+    try {
+      const response = await APIService.post("/manager/login", newAdmin);
+      const token = response.data.ACCESS_TOKEN;
+      const role = response.data.role.toLowerCase();
+      console.log(response);
+      localStorage.setItem("Token", token);
+      localStorage.setItem("role", role);
+      if (role === "admin") {
+        setAdminRole(role);
+        setAdminToken(token);
+        navigate("/DashBoard");
+      } else if (role === "waiter") {
+        setWaiterRole(role);
+        setWaiterToken(token);
+        navigate("/CafeTables");
+      } else {
+        navigate("/login");
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -45,34 +65,67 @@ export default function LoginCard() {
         <h1 className="txt4 m-1 text-center"> Administrator Access Only</h1>
         <img src={coffee} alt="" className="w-[40px] h-[40px]" />
       </div>
+      <div className="grid grid-cols-1 gap-2">
+        <TextField
+          label="Login ID"
+          className="w-full "
+          id="outlined-start-adornment"
+          placeholder="Enter Your Login ID/email"
+          value={newAdmin.loginId}
+          onChange={(event) => {
+            setNewAdmin({ ...newAdmin, loginId: event.target.value });
+          }}
+          slotProps={{
+            input: {
+              startAdornment: <InputAdornment></InputAdornment>,
+            },
+          }}
+        />
+        <FormControl className=" w-full text-left" variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-password">
+            Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={showPassword ? "text" : "password"}
+            value={newAdmin.accountPassword}
+            onChange={(event) => {
+              setNewAdmin({ ...newAdmin, accountPassword: event.target.value });
+            }}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label={
+                    showPassword ? "hide the password" : "display the password"
+                  }
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  onMouseUp={handleMouseUpPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+        </FormControl>
+      </div>
 
-      <label className="ml-5 w-full text-left m-1">Login ID</label>
-      <input
-        className="border-2 rounded-xl border-[#704123] w-full p-2 mb-5 bg-primary"
-        placeholder="Enter your Email or ID"
-        value={newAdmin.loginId}
-        onChange={(event) => {
-          setNewAdmin({ ...newAdmin, loginId: event.target.value });
-        }}
-      />
-
-      <label className="ml-5 w-full text-left mb-1">Password</label>
-      <input
-        className="border-2 rounded-xl border-[#704123] w-full p-2 mb-5 bg-primary"
-        type="password"
-        placeholder="Enter your Password"
-        value={newAdmin.accountPassword}
-        onChange={(event) => {
-          setNewAdmin({ ...newAdmin, accountPassword: event.target.value });
-        }}
-      />
       <button
         disabled={loading}
         type="submit"
         className="w-1/2 p-2 mt-5 mb-5 box-shadow rounded-[15px] cursor-pointer login"
         onClick={handleToSubmit}
       >
-        Login
+        {loading ? (
+          <div className="flex items-center gap-2">
+            <span className="loaderButton"></span>
+            <span>Logging in...</span>
+          </div>
+        ) : (
+          "Login"
+        )}
       </button>
     </div>
   );

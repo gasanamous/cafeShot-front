@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import TableCard from "./TableCard";
 import TableDialog from "./TableDialog";
 import APIService from "../../utils/api";
+import Loader from "../../Components/Loader/Loader";
 
 function CafeTables() {
   const [open, setOpen] = useState(false);
@@ -9,25 +10,33 @@ function CafeTables() {
   const [listTables, setListTables] = useState([]);
   const [groubedTables, setGroubedTables] = useState([]);
   const [isActive, setIsActive] = useState("All");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getListOfTables = async () => {
-      const response = await APIService.get(
-        `/table/tablesDetails`,
-        true,
-        "waiter"
-      );
-      const sortedTables = response.tablesWithOrders.sort((a, b) => {
-        const numA = parseInt(a._id.split("_")[1]);
-        const numB = parseInt(b._id.split("_")[1]);
-        return numA - numB;
-      });
-      setListTables(sortedTables);
-      const status = localStorage.getItem("groubedTables");
-      if (!status || status === "All") {
-        setGroubedTables(sortedTables);
-      } else {
-        setGroubedTables(sortedTables.filter((t) => t.status === status));
+      setLoading(true);
+      try {
+        const response = await APIService.get(
+          `/table/tablesDetails`,
+          true,
+          "waiter"
+        );
+        const sortedTables = response.tablesWithOrders.sort((a, b) => {
+          const numA = parseInt(a._id.split("_")[1]);
+          const numB = parseInt(b._id.split("_")[1]);
+          return numA - numB;
+        });
+        setListTables(sortedTables);
+        const status = localStorage.getItem("groubedTables");
+        if (!status || status === "All") {
+          setGroubedTables(sortedTables);
+        } else {
+          setGroubedTables(sortedTables.filter((t) => t.status === status));
+        }
+      } catch (error) {
+        console.error("Failed to fetch tables", error);
+      } finally {
+        setLoading(false);
       }
     };
     getListOfTables();
@@ -75,17 +84,21 @@ function CafeTables() {
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {groubedTables &&
-          groubedTables.map((table) => (
-            <TableCard
-              table={table}
-              key={table.TableId}
-              handleOpen={() => handleOpen(table._id)}
-            />
-          ))}
-        <TableDialog open={open} setOpen={setOpen} table={tableToHandle} />
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {groubedTables &&
+            groubedTables.map((table) => (
+              <TableCard
+                table={table}
+                key={table.TableId}
+                handleOpen={() => handleOpen(table._id)}
+              />
+            ))}
+          <TableDialog open={open} setOpen={setOpen} table={tableToHandle} />
+        </div>
+      )}
     </div>
   );
 }

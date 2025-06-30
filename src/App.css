@@ -156,3 +156,18 @@ tbody tr td {
 .animate-spin{
   animation-duration: 5s;
 }
+.loaderButton {
+  border: 3px solid #fff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
