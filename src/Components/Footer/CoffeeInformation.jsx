@@ -6,19 +6,22 @@ export default function CoffeeInformation() {
   const { siteSettings } = useSiteSettings();
 
   return (
-    <div className="flex flex-col justify-center items-start">
-      <h1 className="txt4 font-bold text-2xl mb-2">Coffee Shot Info</h1>
-      <div className="flex flex-row justify-center items-center m-1 ">
+    <div className="flex flex-col items-start gap-3 px-4 text-left">
+      <h1 className="txt4 font-bold text-xl">Coffee Shot Info</h1>
+
+      <div className="flex items-center gap-2">
         <CallIcon className="txt3" />
-        <h3 className="ml-2 txt3 contact">{siteSettings.phoneNumber}</h3>
+        <span className="txt3">{siteSettings.phoneNumber}</span>
       </div>
-      <div className="flex flex-row justify-center items-center m-1 ">
+
+      <div className="flex items-center gap-2">
         <EmailIcon className="txt3" />
-        <h3 className="ml-2 txt3 contact">{siteSettings.email}</h3>
+        <span className="txt3">{siteSettings.email}</span>
       </div>
-      <div className="flex flex-row justify-center items-center m-1 ">
-        <LocationOnIcon className="txt3 " />
-        <h3 className="txt3 contact">{siteSettings.Location}</h3>
+
+      <div className="flex items-center gap-2">
+        <LocationOnIcon className="txt3" />
+        <span className="txt3">{siteSettings.Location}</span>
       </div>
     </div>
   );
