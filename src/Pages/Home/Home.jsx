@@ -47,22 +47,21 @@ function Home() {
   useEffect(() => {
     /** if pathname contains tableId then automatic book a table */
     const bookTable = async (tableId) => {
-    try {
-      const response = await APIService.post("/table/booktable", { tableId });
-      const token = response.data?.TABLE_ACCESS_TOKEN;
-      localStorage.setItem("role", "customer");
-      localStorage.setItem("TABLE_ACCESS_TOKEN", token);
-      localStorage.setItem("tableId", tableId);
-      localStorage.setItem("orderItems", "[]");
-      setRole("customer");
-      
-    } catch (error) {
-      console.log(error.response.data?.errMsg);
-    }
-  };
+      try {
+        const response = await APIService.post("/table/booktable", { tableId });
+        const token = response.data?.TABLE_ACCESS_TOKEN;
+        localStorage.setItem("role", "customer");
+        localStorage.setItem("TABLE_ACCESS_TOKEN", token);
+        localStorage.setItem("tableId", tableId);
+        localStorage.setItem("orderItems", "[]");
+        setRole("customer");
+      } catch (error) {
+        console.log(error.response.data?.errMsg);
+      }
+    };
 
-    const queryParams = new URLSearchParams(window.location.search)
-    const tableId = queryParams.get('tableId')
+    const queryParams = new URLSearchParams(window.location.search);
+    const tableId = queryParams.get("tableId");
     if (tableId) {
       bookTable(tableId);
     }
@@ -78,7 +77,6 @@ function Home() {
       <div className={`relative  bg-primary pb-6`}>
         {!customerToken ? (
           <div className="fixed right-0 -translate-y-1/2 z-50 flex flex-col gap-4 top-3/4">
-            <Bell />
             <OrderNow handleClickOpen={handleClickOpen} />
           </div>
         ) : (
