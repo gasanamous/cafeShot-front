@@ -11,10 +11,17 @@ function TablesManagement() {
     { name: "_id", type: "text" },
     { name: "floor", type: "text" },
     { name: "status", type: "text" },
+    { name: "tableQR", type: "file" },
   ];
   const headerToEdit = [
-    { name: "tableId", type: "text" },
-    { name: "floor", type: "select",options: ["0","1", "2", "3"], },
+    { name: "tableId", type: "text", required: true },
+    {
+      name: "floor",
+      type: "select",
+      options: ["0", "1", "2", "3"],
+      required: true,
+    },
+    { name: "tableQR", type: "file", required: true },
   ];
   const [openForm, setOpenForm] = useState(false);
   const [loading, setLoading] = useState(false);
