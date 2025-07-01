@@ -94,7 +94,7 @@ function ViewTable({ array, headerToView, headerToEdit, item }) {
                       src={`${import.meta.env.VITE_API}/utils/${
                         item === "table" ? "tables" : "png"
                       }/${object[col.name]}`}
-                      className="w-[70px] h-[70px]"
+                      className="w-[70px] h-[70px] mx-auto"
                       alt="table"
                     />
                   ) : (
