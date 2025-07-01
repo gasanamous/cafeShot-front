@@ -9,7 +9,7 @@ import { useCustomer } from "../../Contexts/CustomerContext";
 function MenuItem({ menuItem }) {
   const { customerToken } = useCustomer();
   const [open, setOpen] = useState(false);
-
+  const isManager = localStorage.getItem("Token");
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -47,6 +47,8 @@ function MenuItem({ menuItem }) {
           </button>
           <MenuDialog open={open} setOpen={setOpen} menuItem={menuItem} />
         </>
+      ) : isManager ? (
+        <></>
       ) : (
         <>
           <IoAddOutline

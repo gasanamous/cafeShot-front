@@ -6,7 +6,7 @@ import { SiCcleaner } from "react-icons/si";
 import { FaLock } from "react-icons/fa";
 import { FaLockOpen } from "react-icons/fa";
 
-function ViewTable({ array, headerToView,headerToEdit, item }) {
+function ViewTable({ array, headerToView, headerToEdit, item }) {
   if (!array || array.length === 0) {
     return <p className="text-center">No data available</p>;
   }
@@ -14,7 +14,7 @@ function ViewTable({ array, headerToView,headerToEdit, item }) {
   const isImageFile = (filename) => {
     return /\.(jpg|jpeg|png|gif|webp)$/i.test(filename);
   };
-
+  const [searchTerm, setSearchTerm] = useState("");
   const [open, setOpen] = useState(false);
   const [editData, setEditData] = useState({});
   const [action, setAction] = useState("");
@@ -29,8 +29,32 @@ function ViewTable({ array, headerToView,headerToEdit, item }) {
     setOpen(false);
     setEditData(null);
   };
+  const filteredArray = array.filter((obj) =>
+    headerToView.some((col) => {
+      const value = obj[col.name];
+      if (typeof value === "string" || typeof value === "number") {
+        return value
+          .toString()
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      } else if (Array.isArray(value)) {
+        return value.join(" ").toLowerCase().includes(searchTerm.toLowerCase());
+      }
+      return false;
+    })
+  );
   return (
     <div className="overflow-auto h-[65vh] txt3">
+      <div className="p-2">
+        <label>Search {item}: </label>
+        <input
+          type="text"
+          placeholder="Type to search by name, status, or anything..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-1/2  p-2 border rounded-md"
+        />
+      </div>
       <table className="w-full text-center">
         <thead>
           <tr className="bg-primary  tracking-wider sticky top-0 txt3">
@@ -41,7 +65,7 @@ function ViewTable({ array, headerToView,headerToEdit, item }) {
           </tr>
         </thead>
         <tbody>
-          {array.map((object, index) => (
+          {filteredArray.map((object, index) => (
             <tr
               className="border-b-2 border-dashed text-sm transition-colors txt3"
               key={index}

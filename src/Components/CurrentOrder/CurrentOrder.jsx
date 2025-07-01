@@ -14,7 +14,7 @@ export default function CurrentOrder() {
   const [listOfCurrentOrder, setListOfCurrentOrder] = useState(
     JSON.parse(localStorage.getItem("orderItems")) || []
   );
-  let orderStatus = "pending";
+  let orderStatus = "Pending";
 
   const listOfOrderItemCard = listOfCurrentOrder.map((order) => {
     sum += order.quantity * order.price;
@@ -129,7 +129,7 @@ export default function CurrentOrder() {
           <div className="flex p-2.5 justify-center items-center flex-row flex-wrap gap-3">
             {listOfOrderItemCard}
           </div>
-          {orderStatus === "pending" && (
+          {orderStatus === "Pending" && (
             <button
               disabled={loading}
               className="bg-secondary txt1 rounded-sm p-1 cursor-pointer  block mx-auto m-10"
