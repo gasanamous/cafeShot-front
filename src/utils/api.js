@@ -38,7 +38,7 @@ export default class APIService {
       });
 
       if (method.toLowerCase() === "post" || method.toLowerCase() === "patch") {
-        toast.success(response?.data?.message || `added Successfully`);
+        toast.success(response?.data?.message);
       } if (method.toLowerCase() === "delete") toast.success(response?.data?.message || `Item deleted Successfully`);
       return response;
     } catch (error) {

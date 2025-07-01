@@ -6,7 +6,9 @@ function AdminDialog({ open, header, data, onClose, action, item }) {
   if (!data) return null;
   const id = data._id || data.managerId;
   const name = data.itemName;
+  
   const [formData, setFormData] = useState({});
+  const [newDecoration, setNewDecoration] = useState("");
   useEffect(() => {
     if (data && header) {
       const initialData = {};
@@ -20,11 +22,21 @@ function AdminDialog({ open, header, data, onClose, action, item }) {
 
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
-
     if (type === "file") {
       setFormData({
         ...formData,
         [name]: files[0],
+      });
+    } else if (name === "possibleDecorations") {
+      let updated = [...(formData[name] || [])];
+      if (checked) {
+        updated.push(value);
+      } else {
+        updated = updated.filter((v) => v !== value);
+      }
+      setFormData({
+        ...formData,
+        [name]: updated,
       });
     } else {
       setFormData({
@@ -32,6 +44,7 @@ function AdminDialog({ open, header, data, onClose, action, item }) {
         [name]: value,
       });
     }
+    console.log(name, value);
   };
 
   const handleSubmit = async (e) => {
@@ -48,15 +61,17 @@ function AdminDialog({ open, header, data, onClose, action, item }) {
         if (item === "menu") {
           const formToSend = new FormData();
           for (const key in formData) {
-            formToSend.append(key, formData[key]);
+            let value = formData[key];
+
+            formToSend.append(key, value);
           }
+          console.log(formToSend);
           const res = await APIService.patch(
             `/${item}/${action}/${id}`,
             action === "update" ? formToSend : {},
             true,
             "admin"
           );
-          
         } else {
           const res = await APIService.patch(
             `/${item}/${action}/${id}`,
@@ -125,6 +140,62 @@ function AdminDialog({ open, header, data, onClose, action, item }) {
                           </MenuItem>
                         ))}
                       </TextField>
+                    );
+                  } else if (name === "possibleDecorations") {
+                    return (
+                      <div key={name} className="mb-4">
+                        <label className="block text-sm font-medium mb-1">
+                          Possible Decorations
+                        </label>
+                        <div className="flex flex-wrap gap-2">
+                          {(formData.possibleDecorations || []).map(
+                            (decoration, idx) => (
+                              <label
+                                key={idx}
+                                className="flex items-center gap-1"
+                              >
+                                <input
+                                  type="checkbox"
+                                  name="possibleDecorations"
+                                  value={decoration}
+                                  className="w-4 h-4"
+                                  checked={(
+                                    formData.possibleDecorations || []
+                                  ).includes(decoration)}
+                                  onChange={handleChange}
+                                />
+                                <span>{decoration}</span>
+                              </label>
+                            )
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <input
+                            type="text"
+                            value={newDecoration}
+                            onChange={(e) => setNewDecoration(e.target.value)}
+                            className="border p-1 rounded flex-1"
+                            placeholder="Add new decoration"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (newDecoration.trim() === "") return;
+                              setFormData((prev) => ({
+                                ...prev,
+                                possibleDecorations: [
+                                  ...(prev.possibleDecorations || []),
+                                  newDecoration.trim(),
+                                ],
+                              }));
+                              setNewDecoration("");
+                            }}
+                            className="bg-secondary text-white px-3 py-1 rounded"
+                          >
+                            Add
+                          </button>
+                        </div>
+                      </div>
                     );
                   }
                   return (

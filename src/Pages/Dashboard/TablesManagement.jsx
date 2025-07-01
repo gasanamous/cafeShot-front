@@ -35,9 +35,9 @@ function TablesManagement() {
   const getTables = async () => {
     setLoading(true);
     try {
-      const data = await APIService.get(`/table/tablesDetails`, true, "admin");
+      const data = await APIService.get(`/table/all`, true, "admin");
       setTables(
-        data.tablesWithOrders.sort((a, b) => {
+        data.tables.sort((a, b) => {
           const numA = parseInt(a._id.split("_")[1]);
           const numB = parseInt(b._id.split("_")[1]);
           return numA - numB;

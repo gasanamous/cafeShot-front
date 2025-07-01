@@ -50,6 +50,7 @@ function MenuItemsManagement() {
     try {
       const data = await APIService.get(`/menu`);
       setMenuItems(data?.menu);
+      console.log(menuItems);
     } catch (error) {
       console.log(error);
     }finally{
