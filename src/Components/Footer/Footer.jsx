@@ -7,18 +7,18 @@ import CoffeeInformation from "./CoffeeInformation";
 function Footer() {
   return (
     <div className="bg-primary flex flex-col txt4 items-center py-6 px-4">
-      <div className="flex flex-col md:flex-row md:gap-6 justify-between w-full max-w-6xl items-start md:items-center">
-        <div className="flex-1 min-w-[250px] flex justify-center">
+      <div className="flex flex-col md:flex-row md:gap-6 justify-between w-full max-w-6xl items-center gap-5 md:items-center">
+        <div className="flex-1 min-w-[250px] flex justify-center items-center">
           <HoursOfOperation />
         </div>
-        <div className="flex-1 min-w-[250px] flex justify-center">
+        <div className="flex-1 min-w-[250px] flex justify-center items-center">
           <CoffeeTime />
         </div>
-        <div className="flex-1 min-w-[250px] flex justify-center">
+        <div className="flex-1 min-w-[250px] flex justify-center items-center">
           <CoffeeInformation />
         </div>
       </div>
-      <hr className="w-full max-w-6xl mt-6 border border-gray-400" />
+      <hr className="w-full max-w-6xl mt-6 border border-gray-400 " />
     </div>
   );
 }

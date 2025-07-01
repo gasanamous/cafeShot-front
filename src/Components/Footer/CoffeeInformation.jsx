@@ -6,7 +6,7 @@ export default function CoffeeInformation() {
   const { siteSettings } = useSiteSettings();
 
   return (
-    <div className="flex flex-col items-start gap-3 px-4 text-left">
+    <div className="flex flex-col items-center gap-3 px-4 text-left">
       <h1 className="txt4 font-bold text-xl">Coffee Shot Info</h1>
 
       <div className="flex items-center gap-2">
