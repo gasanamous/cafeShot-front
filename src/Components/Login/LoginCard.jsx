@@ -25,7 +25,12 @@ export default function LoginCard() {
   };
 
   const navigate = useNavigate();
-  const { setAdminToken, setRole: setAdminRole } = useAdmin();
+  const {
+    setAdminToken,
+    setRole: setAdminRole,
+    setManagerId,
+    setFullName,
+  } = useAdmin();
   const { setWaiterToken, setRole: setWaiterRole } = useWaiter();
   const [newAdmin, setNewAdmin] = useState({
     loginId: "",
@@ -39,11 +44,13 @@ export default function LoginCard() {
       const token = response.data.ACCESS_TOKEN;
       const role = response.data.role.toLowerCase();
       console.log(response);
+      
       localStorage.setItem("Token", token);
       localStorage.setItem("role", role);
       if (role === "admin") {
         setAdminRole(role);
         setAdminToken(token);
+        setManagerId(response.data.managerId);setFullName(response.data.fullName);
         navigate("/DashBoard");
       } else if (role === "waiter") {
         setWaiterRole(role);

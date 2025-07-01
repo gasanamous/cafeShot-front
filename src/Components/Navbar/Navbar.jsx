@@ -16,7 +16,7 @@ function Navbar() {
   const navigate = useNavigate();
   const { siteSettings } = useSiteSettings();
   const { customerToken } = useCustomer();
-  const { adminToken, logout: adminLogout } = useAdmin();
+  const { adminToken, logout: adminLogout, fullName } = useAdmin();
   const { waiterToken, logout: waiterLogout } = useWaiter();
 
   const userRole = localStorage.getItem("role")?.toUpperCase();
@@ -51,7 +51,7 @@ function Navbar() {
     <div className="w-full z-50 flex flex-col items-center justify-center sticky top-0">
       <div className="sticky top-0 w-full bg-secondary z-50 py-2 px-4 text-center shadow-sm overflow-hidden">
         <p className={`${style.text} text-sm tracking-wide txt1 font-medium`}>
-          We're open daily from 
+          We're open daily from
           <span className="font-semibold">
             {formatTime12Hour(siteSettings.openAt)}
           </span>{" "}
@@ -119,7 +119,7 @@ function Navbar() {
                   <li>
                     <details className="txt4">
                       <summary className="cursor-pointer">
-                        Welcome {userRole}
+                        Welcome {fullName}
                       </summary>
                       <ul className="pl-4">
                         <li>
@@ -154,7 +154,7 @@ function Navbar() {
               (adminToken || waiterToken) && (
                 <details className="relative group">
                   <summary className="cursor-pointer txt1 bg-secondary rounded-xl px-4 py-2">
-                    Welcome {userRole}
+                    Welcome {fullName}
                   </summary>
                   {adminToken
                     ? renderDropdown("/DashBoard", "Dashboard")

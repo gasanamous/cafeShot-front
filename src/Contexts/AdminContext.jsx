@@ -5,6 +5,8 @@ const AdminContext = createContext();
 export const AdminProvider = ({ children }) => {
   const [role, setRole] = useState(localStorage.getItem("role"));
   const [adminToken, setAdminToken] = useState(null);
+  const [managerId, setManagerId] = useState("");
+  const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (role?.toLowerCase() === "admin") {
@@ -21,7 +23,18 @@ export const AdminProvider = ({ children }) => {
 
   return (
     <AdminContext.Provider
-      value={{ role, setRole, adminToken,setAdminToken, logout, loading }}
+      value={{
+        role,
+        setRole,
+        adminToken,
+        setAdminToken,
+        logout,
+        loading,
+        managerId,
+        setManagerId,
+        fullName,
+        setFullName,
+      }}
     >
       {children}
     </AdminContext.Provider>

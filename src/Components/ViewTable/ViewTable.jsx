@@ -5,12 +5,13 @@ import { MdDelete } from "react-icons/md";
 import { SiCcleaner } from "react-icons/si";
 import { FaLock } from "react-icons/fa";
 import { FaLockOpen } from "react-icons/fa";
+import { useAdmin } from "../../Contexts/AdminContext";
 
 function ViewTable({ array, headerToView, headerToEdit, item }) {
   if (!array || array.length === 0) {
     return <p className="text-center">No data available</p>;
   }
-
+  const { managerId } = useAdmin();
   const isImageFile = (filename) => {
     return /\.(jpg|jpeg|png|gif|webp)$/i.test(filename);
   };
@@ -115,7 +116,7 @@ function ViewTable({ array, headerToView, headerToEdit, item }) {
                     <button onClick={() => handleOpenAction(index, "delete")}>
                       <MdDelete />
                     </button>
-                    {item === "manager" ? (
+                    {item === "manager" && managerId != object["managerId"] ? (
                       <button
                         onClick={() => handleOpenAction(index, "restrict")}
                       >
