@@ -91,9 +91,9 @@ function ViewTable({ array, headerToView, headerToEdit, item }) {
                     <>{JSON.stringify(object[col])}</>
                   ) : isImageFile(object[col.name]) ? (
                     <img
-                      src={`${import.meta.env.VITE_API}/utils/png/${
-                        object[col.name]
-                      }`}
+                      src={`${import.meta.env.VITE_API}/utils/${
+                        item === "table" ? "tables" : "png"
+                      }/${object[col.name]}`}
                       className="w-[70px] h-[70px]"
                       alt="table"
                     />
