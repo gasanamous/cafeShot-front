@@ -16,7 +16,8 @@ function Navbar() {
   const navigate = useNavigate();
   const { siteSettings } = useSiteSettings();
   const { customerToken } = useCustomer();
-  const { adminToken, logout: adminLogout, fullName } = useAdmin();
+  const fullName = localStorage.getItem("fullName");
+  const { adminToken, logout: adminLogout } = useAdmin();
   const { waiterToken, logout: waiterLogout } = useWaiter();
 
   const userRole = localStorage.getItem("role")?.toUpperCase();
