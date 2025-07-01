@@ -6,12 +6,19 @@ import "../../App.css";
 import APIService from "../../utils/api";
 import { useAdmin } from "../../Contexts/AdminContext";
 import { useWaiter } from "../../Contexts/WaiterContext";
-import { FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import {
+  FormControl,
+  FormHelperText,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  TextField,
+} from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export default function LoginCard() {
-
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -43,14 +50,18 @@ export default function LoginCard() {
       const response = await APIService.post("/manager/login", newAdmin);
       const token = response.data.ACCESS_TOKEN;
       const role = response.data.role.toLowerCase();
-      console.log(response);
-      
+      const Id = response.data.managerId;
+      const fullName = response.data.fullName;
+
       localStorage.setItem("Token", token);
       localStorage.setItem("role", role);
+      localStorage.setItem("Id", Id);
+      localStorage.setItem("fullName", fullName);
       if (role === "admin") {
         setAdminRole(role);
         setAdminToken(token);
-        setManagerId(response.data.managerId);setFullName(response.data.fullName);
+        setManagerId(response.data.managerId);
+        setFullName(response.data.fullName);
         navigate("/DashBoard");
       } else if (role === "waiter") {
         setWaiterRole(role);

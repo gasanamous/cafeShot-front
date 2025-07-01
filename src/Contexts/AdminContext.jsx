@@ -5,12 +5,14 @@ const AdminContext = createContext();
 export const AdminProvider = ({ children }) => {
   const [role, setRole] = useState(localStorage.getItem("role"));
   const [adminToken, setAdminToken] = useState(null);
-  const [managerId, setManagerId] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [managerId, setManagerId] = useState(localStorage.getItem("Id") || "");
+  const [fullName, setFullName] = useState(localStorage.getItem("fullName")||"");
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (role?.toLowerCase() === "admin") {
       setAdminToken(localStorage.getItem("Token"));
+      setFullName(localStorage.getItem("fullName"));
+      setManagerId(localStorage.getItem("Id"));
     }
     setLoading(false);
   }, [role]);
