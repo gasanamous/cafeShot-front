@@ -6,8 +6,8 @@ nav ul li a {
 .mobileNavbar {
   position: absolute;
   z-index: 30;
-  top: 3rem;
-  right: 4px;
+  top: 88px;
+  right: 0px;
   border-radius: 0px 0px 20px 20px;
   width: max-content;
   border: 2px solid var(--color1);

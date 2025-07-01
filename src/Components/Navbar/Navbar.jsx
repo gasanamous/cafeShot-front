@@ -80,7 +80,7 @@ function Navbar() {
 
           {menuOpen && (
             <div
-              className="fixed inset-0 z-10 bg-secondary-trans top-12"
+              className="fixed inset-0 z-10 bg-secondary-trans top-22"
               onClick={() => setMenuOpen(false)}
             ></div>
           )}
