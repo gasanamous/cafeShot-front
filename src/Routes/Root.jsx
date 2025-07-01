@@ -36,6 +36,7 @@ function Root() {
           <BellNotification message={message} />,
           { ...toastProps, icon: null }
         )
+        playBellAudio()
       })
     }
 
